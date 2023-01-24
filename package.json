@@ -1,0 +1,29 @@
+{
+  "name": "promises-tobias",
+  "version": "1.0.0",
+  "description": "Promises inlämning",
+  "source": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tobias-ChasStudent/Promises-Tobias.git"
+  },
+  "author": "Tobias",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tobias-ChasStudent/Promises-Tobias/issues"
+  },
+  "homepage": "https://github.com/Tobias-ChasStudent/Promises-Tobias#readme",
+  "dependencies": {
+    "axios": "^1.2.3",
+    "live-server": "^1.2.2"
+  },
+  "devDependencies": {
+    "buffer": "^5.7.1",
+    "parcel": "^2.8.3"
+  }
+}
