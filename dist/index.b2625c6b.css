@@ -13,7 +13,12 @@ body, h1, h2, h3, h4, h5, h6, p, ul {
 }
 
 body {
+  color: #4b4946;
   background-color: #000;
+}
+
+.error {
+  color: red;
 }
 
 .random-image {
@@ -30,6 +35,30 @@ body {
   background-color: #ffe4bbdd;
   border-radius: 3px;
   padding: 5px;
+}
+
+.weather {
+  font-size: 1.5rem;
+}
+
+.weather > img {
+  width: 5rem;
+}
+
+#wind {
+  height: 50px;
+  flex-direction: row;
+  align-content: center;
+  display: flex;
+}
+
+#wind > #speed {
+  align-self: center;
+}
+
+#wind > img {
+  width: 2rem;
+  align-self: center;
 }
 
 /*# sourceMappingURL=index.b2625c6b.css.map */

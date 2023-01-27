@@ -562,21 +562,28 @@ var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const chuckURL = "https://api.chucknorris.io/jokes/random";
 const nasaURL = "https://api.nasa.gov/planetary/apod?api_key=0J9psijfNVWO8gC7iRadAgjWjCqmd9HwZw7WmJgb";
-const ranURL = "https://random.imagecdn.app/v1/image?&format=json";
+let spanTime = "";
 navigator.geolocation.getCurrentPosition((response)=>{
     console.log("https://api.openweathermap.org/data/2.5/weather?&appid=401395c8bb11a6dde982bcf35f6812e4&units=metric&lat=" + response.coords.latitude + "&lon=" + response.coords.longitude);
 });
 async function getNasa() {
     await (0, _axiosDefault.default)(nasaURL).then((response)=>{
+        const nasa = response.data;
+        console.log(nasaURL);
         try {
-            const nasa = response.data;
-            console.log(nasaURL);
-            console.log(nasa);
+            //console.log(nasa);
             document.querySelector(".random-image").setAttribute("style", `background:url(${nasa.url}); background-repeat: no-repeat; background-size: contain; background-position: center;`);
-            //Add explanation and limit the length to 600 characters
-            document.querySelector(".nasa").innerHTML = nasa.explanation.substring(0, 500) + "...<br><br> Credit: <a href='https://apod.nasa.gov/apod/astropix.html' target='_blank'>Click Here</a> ";
+            try {
+                //Add explanation and limit the length to 600 characters
+                document.querySelector(".nasa").innerHTML = nasa.explanation.substring(0, 500) + "...<br><br> Credit: <a href='https://apod.nasa.gov/apod/astropix.html' target='_blank'>Click Here</a>";
+            } catch (error) {
+                console.error(error);
+                document.querySelector(".nasa").innerHTML = "<p class='error'>Couldn't load nasa explanation and credit. <a href='https://apod.nasa.gov/apod/astropix.html'>Link to it</a></p>";
+            }
         } catch (error) {
             console.error(error);
+            document.querySelector(".random-image").innerHTML = "<p class='error'>Couldn't load picture of the day. Sorry! <a href='https://apod.nasa.gov/apod/astropix.html'>Link to it</a></p> <br> <p> Credit to current background to: Aldebaran S";
+            document.querySelector(".random-image").setAttribute("style", `background: url(https://images.unsplash.com/photo-1610296669228-602fa827fc1f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1375&q=80) ; background-repeat: no-repeat; background-size: contain; background-position: center;`);
         }
     });
 }
@@ -584,10 +591,11 @@ async function getChuck() {
     await (0, _axiosDefault.default)(chuckURL).then((response)=>{
         try {
             const chuck = response.data;
-            console.log(chuck.value);
+            //console.log(chuck.value);
             document.querySelector(".chuck-norris").textContent = chuck.value;
         } catch (error) {
             console.error(error);
+            document.querySelector(".chuck-norris").innerHTML = "<p class='error'>Couldn't load Chuck Norris joke. Sorry!</p>";
         }
     });
 }
@@ -599,19 +607,50 @@ function getWeather() {
                 const weather = response.data;
                 const main = weather.main;
                 const wind = weather.wind;
+                console.log(weather);
                 console.log(main);
                 console.log(wind);
                 let iconURL = `https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`;
-                console.log(iconURL);
+                document.querySelector(".weather").innerHTML = `
+                    
+                    <h2>Today's weather</h2><br>
+                    <h4>${weather.name} - ${weather.weather[0].description}</h4>
+                    <img src="${iconURL}" id="weather-icon" alt="Weather icon showing ${weather.weather[0].description}"><br>
+
+                    <span id="temp">${main.temp}°C</span>
+
+                    <span id="feels-like">(${main.feels_like}°C)</span>
+                    
+                    <section id="wind">
+                        
+                        <span id="speed">Wind: ${wind.speed}m/s</span>
+
+                        <img src="https://www.svgrepo.com/show/253224/compass-up-arrow.svg" alt="Compass arrow pointing at ${wind.deg} degrees" id="deg" style="transform: rotate(${wind.deg}deg)">
+
+                    </section>
+
+                    <span id="time"></span>
+
+    
+                    `;
+                spanTime = document.querySelector("#time");
             });
         } catch (error) {
             console.error(error);
+            document.querySelector(".weather").innerHTML = "Couldn't load weather data. Sorry!";
         }
     });
 }
 getNasa();
 getChuck();
 getWeather();
+setInterval(()=>{
+    let today = new Date();
+    let date = today.getDate() + "/" + (today.getMonth() + 1) + "-" + today.getFullYear();
+    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    //console.log(spanTime);s
+    spanTime.textContent = date + " " + time;
+}, 1000);
 
 },{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -1557,7 +1596,7 @@ var _axiosErrorJs = require("../core/AxiosError.js");
 var _axiosErrorJsDefault = parcelHelpers.interopDefault(_axiosErrorJs);
 var _formDataJs = require("../env/classes/FormData.js");
 var _formDataJsDefault = parcelHelpers.interopDefault(_formDataJs);
-var Buffer = require("7f967f8caffe96d7").Buffer;
+var Buffer = require("e1cf76d0e9d4877").Buffer;
 "use strict";
 /**
  * Determines if the given thing is a array or js object.
@@ -1721,15 +1760,15 @@ const predicates = (0, _utilsJsDefault.default).toFlatObject((0, _utilsJsDefault
 }
 exports.default = toFormData;
 
-},{"7f967f8caffe96d7":"fCgem","../utils.js":"5By4s","../core/AxiosError.js":"3u8Tl","../env/classes/FormData.js":"lSnyf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fCgem":[function(require,module,exports) {
+},{"e1cf76d0e9d4877":"fCgem","../utils.js":"5By4s","../core/AxiosError.js":"3u8Tl","../env/classes/FormData.js":"lSnyf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fCgem":[function(require,module,exports) {
 /*!
  * The buffer module from node.js, for the browser.
  *
  * @author   Feross Aboukhadijeh <https://feross.org>
  * @license  MIT
  */ /* eslint-disable no-proto */ "use strict";
-var base64 = require("746ac47e57c1ebe7");
-var ieee754 = require("875c7fc8a2bc096d");
+var base64 = require("1a2ef2ec4a56eb38");
+var ieee754 = require("7ba40e32242cf865");
 var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" // eslint-disable-line dot-notation
  ? Symbol["for"]("nodejs.util.inspect.custom") // eslint-disable-line dot-notation
  : null;
@@ -2951,7 +2990,7 @@ var hexSliceLookupTable = function() {
     return table;
 }();
 
-},{"746ac47e57c1ebe7":"eIiSV","875c7fc8a2bc096d":"cO95r"}],"eIiSV":[function(require,module,exports) {
+},{"1a2ef2ec4a56eb38":"eIiSV","7ba40e32242cf865":"cO95r"}],"eIiSV":[function(require,module,exports) {
 "use strict";
 exports.byteLength = byteLength;
 exports.toByteArray = toByteArray;

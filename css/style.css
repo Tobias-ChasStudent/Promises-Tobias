@@ -25,6 +25,11 @@ ul {
 
 body {
     background-color: #000000;
+    color: rgb(75, 73, 70);
+}
+
+.error {
+    color: #ff0000;
 }
 
 .random-image {
@@ -42,4 +47,28 @@ body {
     width: 100%;
     padding: 5px;
     border-radius: 3px;
+}
+
+.weather {
+    font-size: 1.5rem;
+}
+
+.weather>img {
+    width: 5rem;
+}
+
+#wind {
+    display: flex;
+    height: 50px;
+    flex-direction: row;
+    align-content: center;
+}
+
+#wind>#speed {
+    align-self: center;
+}
+
+#wind>img {
+    width: 2rem;
+    align-self: center;
 }
